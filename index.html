@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Example</title>
+</head>
+<body>
+    <h1>Call Node.js APIs</h1>
+    <button id="getWelcome">Get Welcome Message</button>
+    <button id="orderTea">Order Ice Tea</button>
+    <button id="orderCoffee">Order Cold Coffee</button>
+    <p id="response"></p>
+
+    <script>
+        // Function to call an API
+        async function callApi(endpoint) {
+            try {
+                const response = await fetch(endpoint);
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+                } else {
+                    document.getElementById('response').innerText = `Error: ${response.status}`;
+                }
+            } catch (error) {
+                console.error("Error calling API:", error);
+                document.getElementById('response').innerText = "Error connecting to the server.";
+            }
+        }
+
+        // Event listeners for buttons
+        document.getElementById('getWelcome').addEventListener('click', () => {
+            callApi('http://127.0.0.1:3000/');
+        });
+
+        document.getElementById('orderTea').addEventListener('click', () => {
+            callApi('http://127.0.0.1:3000/tea');
+        });
+
+        document.getElementById('orderCoffee').addEventListener('click', () => {
+            callApi('http://127.0.0.1:3000/coffee');
+        });
+    </script>
+</body>
+</html>
